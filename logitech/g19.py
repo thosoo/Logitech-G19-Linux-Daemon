@@ -5,6 +5,10 @@ import threading
 import time
 import usb
 import PIL.Image as Img
+import os
+import ImageFont
+import Image, ImageDraw
+
 
 class G19(object):
     '''Simple access to Logitech G19 features.
@@ -19,6 +23,14 @@ class G19(object):
         self.__usbDeviceMutex = threading.Lock()
         self.__keyReceiver = G19Receiver(self)
         self.__threadDisplay = None
+        self.__line1 = ""
+        self.__line2 = ""
+        self.__line3 = ""
+        self.__line4 = ""
+        self.__line5 = ""
+        self.__line6 = ""
+        self.__line7 = ""
+
 
     @staticmethod
     def convert_image_to_frame(filename):
@@ -30,6 +42,7 @@ class G19(object):
         @return Frame data to be used with send_frame().
 
         '''
+        
         img = Img.open(filename)
         access = img.load()
         if img.size != (320, 240):
@@ -43,6 +56,31 @@ class G19(object):
                 data.append(val >> 8)
                 data.append(val & 0xff)
         return data
+    
+    @staticmethod
+    def convert_text_to_image(text):
+        '''Loads image from given file.
+
+        Format will be auto-detected.  If neccessary, the image will be resized
+        to 320x240.
+
+        @return Frame data to be used with send_frame().
+
+        '''
+        
+        access = text.load()
+        if text.size != (320, 240):
+            text = text.resize((320, 240), Img.CUBIC)
+            access = text.load()
+        data = []
+        for x in range(320):
+            for y in range(240):
+                r, g, b = access[x, y]
+                val = G19.rgb_to_uint16(r, g, b)
+                data.append(val >> 8)
+                data.append(val & 0xff)
+        return data
+
 
     @staticmethod
     def rgb_to_uint16(r, g, b):
@@ -85,6 +123,45 @@ class G19(object):
 
         '''
         self.send_frame(self.convert_image_to_frame(filename))
+        
+    def load_text(self, text, line=1, clear=False):
+        self.__im = Img.open("logitech/black.png")
+        draw = ImageDraw.Draw(self.__im)
+        fontPath = "/usr/share/fonts/truetype/Tahoma.TTF"
+        tahoma20  =  ImageFont.truetype ( fontPath, 20 )
+        
+        if line==1:
+            self.__line1 = text
+        
+        if line==2:
+            self.__line2 = text
+        
+        if line==3:
+            self.__line3 = text
+        
+        if line==4:
+            self.__line4 = text
+        
+        if line==5:
+            self.__line5 = text
+        
+        if line==6:
+            self.__line6 = text
+            
+        if line==7:
+            self.__line7 = text
+
+        draw.text((20, 20), self.__line1, font=tahoma20)
+        draw.text((20, 50), self.__line2, font=tahoma20)
+        draw.text((20, 80), self.__line3, font=tahoma20)
+        draw.text((20, 110), self.__line4, font=tahoma20)        
+        draw.text((20, 140), self.__line5, font=tahoma20)
+        draw.text((20, 170), self.__line6, font=tahoma20)
+        draw.text((20, 200), self.__line7, font=tahoma20)
+        
+        del draw 
+        self.send_frame(self.convert_text_to_image(self.__im))
+
 
     def read_g_and_m_keys(self, maxLen=20):
         '''Reads interrupt data from G, M and light switch keys.

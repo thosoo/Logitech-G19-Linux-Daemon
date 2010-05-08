@@ -17,20 +17,20 @@ class SlideshowInputProcessor(InputProcessor):
 
     def process_input(self, inputEvent):
         processed = False
-        if Key.G12 in inputEvent.keysDown:
+        if Key.RIGHT in inputEvent.keysDown:
             try:
                 self.__slideshowrun.changeI("f")
                 processed = True
             except IOError:
                 print "File not found+"
-        if Key.G06 in inputEvent.keysDown:
+        if Key.LEFT in inputEvent.keysDown:
             try:
                 self.__slideshowrun.changeI("r")
                 processed = True
             except IOError:
                 print "File not found -"
                 
-        if Key.G11 in inputEvent.keysDown:
+        if Key.OK in inputEvent.keysDown:
             processed = True
             self.__slideshowrun.switchIsStarted()
             

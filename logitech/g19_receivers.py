@@ -64,7 +64,7 @@ class State(object):
             if not foundAKey:
                 raise ValueError("incorrect g/m key packet: " +
                         str(data))
-
+        print keys
         return set(keys)
 
     def _data_to_keys_mm(self, data):
@@ -93,9 +93,30 @@ class State(object):
             keys = []
         else:
             raise ValueError("incorrect multimedia key packet: " + str(data))
-
+        
         return set(keys)
+    
+    def _data_to_keys_dis(self, data):
+        '''Converts a G/M keys data package to a set of keys defined as
+        pressed by it.
 
+        '''
+        if len(data) != 2 or data[1] != 128:
+            raise ValueError("not a display key packet: " + str(data))
+        curVal = data[0]
+        keys = []
+        while curVal:
+            foundAKey = False
+            for val in Data.displayKeys.keys():
+                if curVal == val:
+                    curVal ^= val
+                    keys.append(Data.displayKeys[val])
+                    foundAKey = True
+            if not foundAKey:
+                raise ValueError("incorrect display key packet: " +
+                        str(data))
+        return set(keys)
+    
     def _update_keys_down(self, possibleKeys, keys):
         '''Updates internal keysDown set.
 
@@ -171,6 +192,23 @@ class State(object):
             keysDown, keysUp = self._update_keys_down(winKeySet, keys)
         newState = self.clone()
         return InputEvent(oldState, newState, keysDown, keysUp)
+    
+    def packet_received_dis(self, data):
+        '''Mutates the state by given data packet from G- and M- keys.
+
+        @param data Data packet received.
+        @return InputEvent for data packet, or None if data packet was ignored.
+
+        '''
+
+        oldState = self.clone()
+        evt = None
+        if len(data) == 2:
+            keys = self._data_to_keys_dis(data)
+            keysDown, keysUp = self._update_keys_down(Key.displayKeys, keys)
+            newState = self.clone()
+            evt = InputEvent(oldState, newState, keysDown, keysUp)
+        return evt
 
 
 class G19Receiver(Runnable):
@@ -218,7 +256,13 @@ class G19Receiver(Runnable):
 
         data = self.__g19.read_display_menu_keys()
         if data:
-            print "dis: ", data
+            evt = self.__state.packet_received_dis(data)
+            if evt:
+                for proc in processors:
+                    if proc.process_input(evt):
+                        break
+            else:
+                print "dis ignored: ", data
             gotData = True
 
         if not gotData:

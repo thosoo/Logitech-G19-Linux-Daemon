@@ -69,6 +69,18 @@ class Key(object):
             M2,
             M3,
             MR])
+            
+    displayKeys = set([
+        BACK,
+        DOWN,
+        LEFT,
+        MENU,
+        OK,
+        RIGHT,
+        SETTINGS,
+        UP])
+
+  
 
 
 class Data(object):

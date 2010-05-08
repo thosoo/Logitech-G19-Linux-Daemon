@@ -125,7 +125,7 @@ class G19(object):
         self.send_frame(self.convert_image_to_frame(filename))
         
     def load_text(self, text, line=1, clear=False):
-        self.__im = Img.open("logitech/black.png")
+        self.fill_display_with_color(255, 255, 255)
         draw = ImageDraw.Draw(self.__im)
         fontPath = "/usr/share/fonts/truetype/Tahoma.TTF"
         tahoma20  =  ImageFont.truetype ( fontPath, 20 )

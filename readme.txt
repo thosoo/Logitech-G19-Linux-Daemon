@@ -4,6 +4,8 @@ This is work in progress and considered absolutely alpha.  It SHOULD work, but n
 guarantees are given.  If your keyboard goes up in flames, explodes and rapes
 your hamster, don't say I didn't warn you!
 
+This are my (sBlatt) additions to MultiCoreNOPs code, README MAY NOT APPLY AND WILL BE CHANGED (eventually)
+
 
 === What you need to use this ===
 

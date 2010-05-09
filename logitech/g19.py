@@ -1,4 +1,6 @@
 from g19_receivers import G19Receiver
+from g19_menu import G19Menu
+from g19_mapper import G19Mapper
 
 import sys
 import threading
@@ -23,6 +25,7 @@ class G19(object):
         self.__usbDeviceMutex = threading.Lock()
         self.__keyReceiver = G19Receiver(self)
         self.__threadDisplay = None
+        self.__im = Img.new("RGB", (320, 240))
         self.__line1 = ""
         self.__line2 = ""
         self.__line3 = ""
@@ -30,6 +33,11 @@ class G19(object):
         self.__line5 = ""
         self.__line6 = ""
         self.__line7 = ""
+        #self.__menu = G19Menu(self)
+        self.__mapper = G19Mapper(self)
+        self.__keyReceiver.add_input_processor(self.__mapper.get_input_processor())
+
+
 
 
     @staticmethod
@@ -124,41 +132,53 @@ class G19(object):
         '''
         self.send_frame(self.convert_image_to_frame(filename))
         
-    def load_text(self, text, line=1, clear=False):
-        self.fill_display_with_color(255, 255, 255)
+    def clear_text(self):
+        self.__im = Img.new("RGB", (320, 240))
+        self.__line1 = ""
+        self.__line2 = ""
+        self.__line3 = ""
+        self.__line4 = ""
+        self.__line5 = ""
+        self.__line6 = ""
+        self.__line7 = ""
+    
+    def load_text(self, text, line=1, clear=False, fontSize=15):
+        if clear==True:
+            self.clear_text()
+##        self.__im = Img.new("RGB", (320, 240))
+
         draw = ImageDraw.Draw(self.__im)
         fontPath = "/usr/share/fonts/truetype/Tahoma.TTF"
         tahoma20  =  ImageFont.truetype ( fontPath, 20 )
         
         if line==1:
             self.__line1 = text
+            draw.text((20, 20), self.__line1, font=tahoma20)
         
         if line==2:
             self.__line2 = text
-        
+            draw.text((20, 50), self.__line2, font=tahoma20)
+
         if line==3:
             self.__line3 = text
+            draw.text((20, 80), self.__line3, font=tahoma20)
         
         if line==4:
             self.__line4 = text
-        
+            draw.text((20, 110), self.__line4, font=tahoma20)        
+
         if line==5:
             self.__line5 = text
-        
+            draw.text((20, 140), self.__line5, font=tahoma20)
+
         if line==6:
             self.__line6 = text
-            
+            draw.text((20, 170), self.__line6, font=tahoma20)
+
         if line==7:
             self.__line7 = text
-
-        draw.text((20, 20), self.__line1, font=tahoma20)
-        draw.text((20, 50), self.__line2, font=tahoma20)
-        draw.text((20, 80), self.__line3, font=tahoma20)
-        draw.text((20, 110), self.__line4, font=tahoma20)        
-        draw.text((20, 140), self.__line5, font=tahoma20)
-        draw.text((20, 170), self.__line6, font=tahoma20)
-        draw.text((20, 200), self.__line7, font=tahoma20)
-        
+            draw.text((20, 200), self.__line7, font=tahoma20)
+            
         del draw 
         self.send_frame(self.convert_text_to_image(self.__im))
 

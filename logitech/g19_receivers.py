@@ -3,6 +3,7 @@ from runnable import Runnable
 
 import threading
 import time
+import virtkey
 
 class InputProcessor(object):
     '''Object to process key presses.'''

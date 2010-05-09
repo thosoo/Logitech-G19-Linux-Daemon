@@ -20,12 +20,14 @@ if __name__ == '__main__':
 ##        displayBrightness = SimpleDisplayBrightness(lg19)
 ##        lg19.add_applet(displayBrightness)
 
-        slideshow = Slideshow(lg19, "logitech/applets/simple_slideshow/pics")
-        lg19.add_applet(slideshow)
-
+##        slideshow = Slideshow(lg19, "logitech/applets/simple_slideshow/pics")
+##        lg19.add_applet(slideshow)
+##        lg19.load_text("ficken", 1)
+##        lg19.load_text("ficken", 2)
+##        lg19.load_text("Hoi Basil", 2)
         while True:
             time.sleep(10)
     finally:
 ##        xplanet.stop()
-        slideshow.stop()
+##        slideshow.stop()
         lg19.stop_event_handling()

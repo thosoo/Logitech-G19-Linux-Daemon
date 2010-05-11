@@ -15,7 +15,7 @@ if __name__ == '__main__':
 #        clock = clock(lg19)
 #        lg19.add_applet(clock)
 ##
-##        xplanet = Xplanet(lg19)
+##        xplanet = xplanet(lg19)
 ##        lg19.add_applet(xplanet)
 ##
 ##        displayBrightness = SimpleDisplayBrightness(lg19)

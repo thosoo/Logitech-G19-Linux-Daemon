@@ -52,9 +52,11 @@ class G19Menu(object):
 
     def stopSelected(self):
         if self.__menuOnly == True:
-            self.__selectedApplet.stop()
-            self.__lg19.remove_applet(self.__selectedApplet)
-            self.__menuOnly = False
+            try:
+                self.__selectedApplet.stop()
+            finally:
+                self.__lg19.remove_applet(self.__selectedApplet)
+                self.__menuOnly = False
         self.showMenu(self.__applets)
         
     def showMenu(self, menuEntries):

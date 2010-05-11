@@ -142,46 +142,47 @@ class G19(object):
         self.__line7 = ""
     
     def set_text(self):
+        self.__im = Img.new("RGB", (320, 240))
+        draw = ImageDraw.Draw(self.__im)
+        draw.text((20, 20), self.__line1, font=self.__tahoma20)
+        draw.text((20, 50), self.__line2, font=self.__tahoma20)
+        draw.text((20, 80), self.__line3, font=self.__tahoma20)
+        draw.text((20, 110), self.__line4, font=self.__tahoma20)        
+        draw.text((20, 140), self.__line5, font=self.__tahoma20)
+        draw.text((20, 170), self.__line6, font=self.__tahoma20)
+        draw.text((20, 200), self.__line7, font=self.__tahoma20)
+
         self.send_frame(self.convert_text_to_image(self.__im))
-    
+        del draw 
+
     def load_text(self, text, line=1, clear=False, fontSize=15):
         if clear==True:
             self.clear_text()
-##        self.__im = Img.new("RGB", (320, 240))
 
-        draw = ImageDraw.Draw(self.__im)
         fontPath = "/usr/share/fonts/truetype/Tahoma.TTF"
-        tahoma20  =  ImageFont.truetype ( fontPath, 20 )
+        self.__tahoma20  =  ImageFont.truetype ( fontPath, 20 )
         
         if line==1:
             self.__line1 = text
-            draw.text((20, 20), self.__line1, font=tahoma20)
         
         if line==2:
             self.__line2 = text
-            draw.text((20, 50), self.__line2, font=tahoma20)
 
         if line==3:
             self.__line3 = text
-            draw.text((20, 80), self.__line3, font=tahoma20)
         
         if line==4:
             self.__line4 = text
-            draw.text((20, 110), self.__line4, font=tahoma20)        
 
         if line==5:
             self.__line5 = text
-            draw.text((20, 140), self.__line5, font=tahoma20)
 
         if line==6:
             self.__line6 = text
-            draw.text((20, 170), self.__line6, font=tahoma20)
 
         if line==7:
             self.__line7 = text
-            draw.text((20, 200), self.__line7, font=tahoma20)
             
-        del draw 
 
 
     def read_g_and_m_keys(self, maxLen=20):

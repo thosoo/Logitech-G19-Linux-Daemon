@@ -21,6 +21,9 @@ class brightness(object):
 
     def get_input_processor(self):
         return self
+    
+    def stop(self):
+        pass
 
     def process_input(self, evt):
         usedInput = False

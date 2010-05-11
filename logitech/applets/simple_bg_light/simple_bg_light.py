@@ -15,6 +15,11 @@ class light(object):
         self.__greenEnabled = False
         self.__blueEnabled = False
         self.__curColor = [255, 255, 255]
+        self.__lg19.load_text("    simple_bg_light", 1, True)
+        self.__lg19.load_text("Red:   255", 3)
+        self.__lg19.load_text("Green: 255", 4)
+        self.__lg19.load_text("Blue:  255", 5)
+        self.__lg19.set_text()
 
     def _clamp_current_color(self):
         '''Assures that all color components are in [0, 255].'''
@@ -24,6 +29,9 @@ class light(object):
             val = self.__curColor[i]
             self.__curColor[i] = val if val <= 255 else 255
 
+    def stop(self):
+        pass
+        
     def _update_leds(self):
         '''Updates M-leds according to enabled state.'''
         val = 0
@@ -68,12 +76,18 @@ class light(object):
 
         if self.__redEnabled:
             self.__curColor[0] += diffVal
+            self.__lg19.load_text("Red:   "+str(self.__curColor[0]), 3)
+            self.__lg19.set_text()
             atLeastOneColorIsEnabled = True
         if self.__greenEnabled:
             self.__curColor[1] += diffVal
+            self.__lg19.load_text("Green: "+str(self.__curColor[1]), 4)
+            self.__lg19.set_text()
             atLeastOneColorIsEnabled = True
         if self.__blueEnabled:
             self.__curColor[2] += diffVal
+            self.__lg19.load_text("Blue:  "+str(self.__curColor[2]), 5)
+            self.__lg19.set_text()
             atLeastOneColorIsEnabled = True
 
         self._clamp_current_color()

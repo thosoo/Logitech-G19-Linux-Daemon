@@ -93,12 +93,12 @@ class SlideshowRun(Runnable):
 class slideshow(object):
 
     def __init__(self, lg19):
-        if not os.path.isdir(moviePath):
+        self.__moviePath = "logitech/applets/simple_slideshow/pics" 
+        if not os.path.isdir(self.__moviePath):
             print "\n! ! !  ERROR: Directory not found: "+moviePath+" ! ! !\n"
             
         else:
             self.__lg19 = lg19
-            self.__moviePath = "logitech/applets/simple_slideshow/pics" 
             self.__slideshowrun = SlideshowRun(lg19,self.__moviePath)        
             self.__inputProcessor = SlideshowInputProcessor(self.__slideshowrun)
             self.start()

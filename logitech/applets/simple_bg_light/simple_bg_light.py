@@ -1,7 +1,7 @@
 from logitech.g19_keys import (Data, Key)
 from logitech.g19_receivers import InputProcessor
 
-class SimpleBgLight(object):
+class light(object):
     '''Simple color changing.
 
     Enable M1..3 for red/green/blue and use the scroll to change the intensity

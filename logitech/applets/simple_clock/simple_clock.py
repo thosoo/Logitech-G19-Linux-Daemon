@@ -16,14 +16,14 @@ class ClockInputProcessor(InputProcessor):
         self.__clockrun = clockrun
 
     def process_input(self, inputEvent):
-        processed = False
-        if Key.BACK in inputEvent.keysDown:
-            try:
-                print "keyBack"
-                self.__clockrun.stop()
-                processed = True
-            except IOError:
-                print "File not found+"
+        processed = True
+#        if Key.BACK in inputEvent.keysDown:
+#            try:
+#                print "keyBack"
+#                self.__clockrun.stop()
+#                processed = True
+#            except IOError:
+#                print "File not found+"
             
         return processed
 

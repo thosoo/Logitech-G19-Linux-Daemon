@@ -106,8 +106,11 @@ class G19(object):
 
     def add_applet(self, applet):
         '''Starts an applet.'''
-        print "Applet added"
         self.__keyReceiver.add_input_processor(applet.get_input_processor())
+        
+    def remove_applet(self, applet):
+        '''Starts an applet.'''
+        self.__keyReceiver.remove_input_processor(applet.get_input_processor())
 
     def fill_display_with_color(self, r, g, b):
         '''Fills display with given color.'''
@@ -358,6 +361,7 @@ class G19(object):
         This method is NOT thread-safe.
 
         '''
+        print "Stopping eventhantling"
         self.__keyReceiver.stop()
         if self.__threadDisplay:
             self.__threadDisplay.join()

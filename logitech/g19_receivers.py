@@ -228,8 +228,16 @@ class G19Receiver(Runnable):
         self.__ips.append(processor)
         self.__mutex.release()
         pass
+    
+    def remove_input_processor(self, processor):
+        '''Adds an input processor.'''
+        self.__mutex.acquire()
+        self.__ips.remove(processor)
+        self.__mutex.release()
+        pass
 
     def execute(self):
+        print "executing"
         gotData = False
         processors = self.list_all_input_processors()
 
@@ -257,6 +265,7 @@ class G19Receiver(Runnable):
 
         data = self.__g19.read_display_menu_keys()
         if data:
+            print "got disKey data"
             evt = self.__state.packet_received_dis(data)
             if evt:
                 for proc in processors:

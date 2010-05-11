@@ -1,7 +1,7 @@
 from logitech.g19_keys import (Data, Key)
 from logitech.g19_receivers import InputProcessor
 
-class SimpleDisplayBrightness(object):
+class brightness(object):
     '''Simple adjustment of display brightness.
 
     Uses scroll to adjust display brightness.

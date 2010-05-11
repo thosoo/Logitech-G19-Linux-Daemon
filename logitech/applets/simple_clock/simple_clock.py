@@ -1,7 +1,6 @@
 from logitech.g19 import *
 from logitech.g19_keys import Key
 from logitech.g19_receivers import *
-from logitech.runnable import Runnable
 
 import multiprocessing
 import os
@@ -17,13 +16,6 @@ class ClockInputProcessor(InputProcessor):
 
     def process_input(self, inputEvent):
         processed = True
-#        if Key.BACK in inputEvent.keysDown:
-#            try:
-#                print "keyBack"
-#                self.__clockrun.stop()
-#                processed = True
-#            except IOError:
-#                print "File not found+"
             
         return processed
 

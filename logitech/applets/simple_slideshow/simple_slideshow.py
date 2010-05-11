@@ -5,7 +5,6 @@ from logitech.runnable import Runnable
 
 import multiprocessing
 import os
-import tempfile
 import threading
 import time
 
@@ -30,6 +29,20 @@ class SlideshowInputProcessor(InputProcessor):
             except IOError:
                 print "File not found -"
                 
+        if Key.UP in inputEvent.keysDown:
+            try:
+                self.__slideshowrun.changeDelay(1)
+                processed = True
+            except IOError:
+                print "File not found -"
+                
+        if Key.DOWN in inputEvent.keysDown:
+            try:
+                self.__slideshowrun.changeDelay(-1)
+                processed = True
+            except IOError:
+                print "File not found -"
+                
         if Key.OK in inputEvent.keysDown:
             processed = True
             self.__slideshowrun.switchIsStarted()
@@ -43,12 +56,12 @@ class SlideshowRun(Runnable):
             print "ERROR: Directory not found: "+moviePath
         else:
             Runnable.__init__(self)
+            self.__delay = 5
             self.__i = 1
             self.__lg19 = lg19
             self.__location = moviePath
             self.__arrFiles = []
             self.__isStarted = True
-##        if os.path.isdir(self.__location):
             try:
                 for f in os.listdir(self.__location):
                     if os.path.isfile(os.path.join(self.__location, f)):
@@ -58,14 +71,17 @@ class SlideshowRun(Runnable):
                 print "IO Exception"
             self.update(0)
         Runnable.__init__(self)
-##        else:
-##            print "Folder "+self.__location+" not found"
 
+    def changeDelay(self, direction):
+        if self.__delay >1:
+            self.__delay = self.__delay + direction
+        elif direction == 1:
+            self.__delay = self.__delay + 1
 
     def execute(self):      
         if self.__isStarted:
             self.changeI("f")
-        time.sleep(5)
+        time.sleep(self.__delay)
     
     def switchIsStarted(self):
         self.__isStarted = not self.__isStarted
@@ -103,7 +119,6 @@ class slideshow(object):
             self.__inputProcessor = SlideshowInputProcessor(self.__slideshowrun)
             self.start()
         
-    
     def get_input_processor(self):
         return self.__inputProcessor
     

@@ -1,27 +1,9 @@
-#!/usr/bin/env python
-
-from runnable import Runnable
 from g19_receivers import G19Receiver
 from logitech.g19 import *
 from logitech.g19_keys import Key
 from logitech.g19_receivers import *
-#try:
-#    for f in os.listdir("logitech/applets/"):
-#        if os.path.isdir(os.path.join("logitech/applets/", f)):
-#            call = f.split("_")
-#            appletname = call[len(call)-1]
-#            exec 'from logitech.applets.' + f + '.' + f + ' import '+ appletname
-#except:
-#    print "IO Exception"
 
-import sys
-import threading
-import time
-import usb
-import PIL.Image as Img
 import os
-import ImageFont
-import Image, ImageDraw
 
 class G19Menu(object):
     def __init__(self, lg19):
@@ -62,28 +44,19 @@ class G19Menu(object):
             appletname = call[len(call)-1]
             exec 'from logitech.applets.' + applet + '.' + applet + ' import '+ appletname
             exec 'selectedApplet ='+ appletname+'(g19)'
-#            g19.remove_applet(self)
             self.__menuOnly = True
-#            g19.add_applet(self)
             g19.add_applet(selectedApplet)
-
             self.__selectedApplet = selectedApplet
-#            while True:
-#                time.sleep(10)
         finally:
-            i = 1
-#            selectedApplet.stop()
-#            self.showMenu(self.__applets)
+            pass
 
     def stopSelected(self):
-        self.__selectedApplet.stop()
-        self.__lg19.remove_applet(self.__selectedApplet)
-        self.__menuOnly = False
-#        g19.add_applet(self)
+        if self.__menuOnly == True:
+            self.__selectedApplet.stop()
+            self.__lg19.remove_applet(self.__selectedApplet)
+            self.__menuOnly = False
         self.showMenu(self.__applets)
         
-
-
     def showMenu(self, menuEntries):
         i = 1
         j=1

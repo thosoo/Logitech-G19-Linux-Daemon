@@ -28,9 +28,15 @@ PySide (not yet)
 - The menu shows your installed applets. As of now (11.5.10) only the simple_slideshow and simple_clock-applets have been tested, the others might work
 - Navigate with your display-keys
 - Press OK to start an applet
-- Press MENU to go back to the Menu
+- Press MENU to go back to the Menu (there is a chance the applet wil reapear on its own, just press MENU again)
 
 - if anything goes wrong: sudo killall python (might kill some other processes)
+
+==== Slideshow ====
+
+- Put pictures to logitech/applets/simple_slideshow/pics/ (or change path in the simple_slideshow.py file)
+- Press OK to start automated slideshow
+- Press UP/DOWN to change slideshow-delay (standard is 5sec, 1sec/step)
 
 
 === Infos for developers ===

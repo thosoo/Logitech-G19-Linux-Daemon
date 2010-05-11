@@ -361,7 +361,6 @@ class G19(object):
         This method is NOT thread-safe.
 
         '''
-        print "Stopping eventhantling"
         self.__keyReceiver.stop()
         if self.__threadDisplay:
             self.__threadDisplay.join()

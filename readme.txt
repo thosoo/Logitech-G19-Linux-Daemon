@@ -4,17 +4,54 @@ This is work in progress and considered absolutely alpha.  It SHOULD work, but n
 guarantees are given.  If your keyboard goes up in flames, explodes and rapes
 your hamster, don't say I didn't warn you!
 
-This are my (sBlatt) additions to MultiCoreNOPs code, README MAY NOT APPLY AND WILL BE CHANGED (eventually)
+This are my (sBlatt) additions to MultiCoreNOPs code, search für him @ gitHub if you want the original code
 
 
 === What you need to use this ===
 
 Python 2.6
-pyusb (I'm using v0.4.2 atm)
+pyusb
 
 optional:
-xplanet
 PySide (not yet)
+
+=== How to install ===
+
+- Get the code
+- unzip to any location
+- start a terminal
+- cd to the folder
+- type sudo python main.py (usb needs root, change your permissions if you want to start this as a normal user)
+
+=== How it works ===
+
+- The menu shows your installed applets. As of now (11.5.10) only the simple_slideshow and simple_clock-applets have been tested, the others might work
+- Navigate with your display-keys
+- Press OK to start an applet
+- Press MENU to go back to the Menu
+
+- if anything goes wrong: sudo killall python (might kill some other processes)
+
+
+=== Infos for developers ===
+
+==== Naming convention ====
+
+- ATM you have to name your applet file the same as your applet folder (otherwise the menu won't find it)
+- ATM the name of your main-class has to be the same as your folder/filename after the last "_"
+	exp. simple_slideshow: class name is slideshow; xplanet: class name is xplanet; simple_bg_light: class name is light 
+
+==== Key-Problems ====
+
+- Don't use the MENU-Key in your application, as it is used to terminate it.
+- If you use the G- or MultimediaKeys, more than 1 action may be triggered
+
+
+
+
+------------------------ Original readmy by MultiCoreNOP--------------------------------------
+
+
 
 
 === What I want to do ===

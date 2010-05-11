@@ -10,7 +10,7 @@ if __name__ == '__main__':
     try:
         menu = G19Menu(lg19)
         lg19.add_applet(menu)
-
+#        lg19.reset()
 #        xplanet = xplanet(lg19)
 #        lg19.add_applet(xplanet)
 

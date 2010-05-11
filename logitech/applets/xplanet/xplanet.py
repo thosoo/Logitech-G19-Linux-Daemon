@@ -82,7 +82,8 @@ class DataStore(object):
     def signal_frame_done(self):
         self.__lock.acquire()
         self.__framesDone += 1
-        print "frames done: {0}".format(self.__framesDone)
+        self.__lg19.load_text("frames done: {0}".format(self.__framesDone),3)
+        self.__lg19.set_text()
         self.__lock.release()
 
     def update(self):
@@ -159,14 +160,17 @@ class XplanetInputProcessor(InputProcessor):
 
     def __init__(self, xplanet):
         self.__xplanet = xplanet
+        self.__isStarted = False
 
     def process_input(self, inputEvent):
         processed = False
-        if Key.PLAY in inputEvent.keysDown:
-            self.__xplanet.start()
-            processed = True
-        if Key.STOP in inputEvent.keysDown:
-            self.__xplanet.stop()
+        if Key.OK in inputEvent.keysDown:
+            if self.__isStarted:
+                self.__xplanet.stop()
+                self.__isStarted = False
+            else:
+                self.__xplanet.start()
+                self.__isStarted = True
             processed = True
         return processed
 
@@ -174,13 +178,18 @@ class XplanetInputProcessor(InputProcessor):
 class xplanet(object):
 
     def __init__(self, lg19):
+        self.__isStarted = False
         self.__dataStore = DataStore(lg19)
         self.__lg19 = lg19
         self.__renderer = XplanetRenderer(lg19, self.__dataStore)
         self.__inputProcessor = XplanetInputProcessor(self)
+        self.__lg19.load_text("      Xplanet",1,True)
+        self.__lg19.load_text("Press OK to start rendering",3)
+        self.__lg19.set_text()
+        
 
     def get_input_processor(self):
-        return self.__inputProcessor
+        return self.__inputProcessor      
 
     def start(self):
         t = threading.Thread(target=self.__dataStore.update)

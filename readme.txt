@@ -42,6 +42,10 @@ PySide (not yet)
 - Press OK to start automated slideshow
 - Press UP/DOWN to change slideshow-delay (standard is 5sec, 1sec/step)
 
+==== Simple_gb_light ====
+- press one or multiple M* keys and use the scrollwheel to adjust color
+- may crash with usberror!
+
 
 === Infos for developers ===
 

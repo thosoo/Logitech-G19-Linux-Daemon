@@ -1,5 +1,4 @@
 from g19_receivers import G19Receiver
-from g19_menu import G19Menu
 from g19_mapper import G19Mapper
 
 import sys
@@ -33,12 +32,8 @@ class G19(object):
         self.__line5 = ""
         self.__line6 = ""
         self.__line7 = ""
-        #self.__menu = G19Menu(self)
         self.__mapper = G19Mapper(self)
         self.__keyReceiver.add_input_processor(self.__mapper.get_input_processor())
-
-
-
 
     @staticmethod
     def convert_image_to_frame(filename):
@@ -111,6 +106,7 @@ class G19(object):
 
     def add_applet(self, applet):
         '''Starts an applet.'''
+        print "Applet added"
         self.__keyReceiver.add_input_processor(applet.get_input_processor())
 
     def fill_display_with_color(self, r, g, b):
@@ -141,6 +137,9 @@ class G19(object):
         self.__line5 = ""
         self.__line6 = ""
         self.__line7 = ""
+    
+    def set_text(self):
+        self.send_frame(self.convert_text_to_image(self.__im))
     
     def load_text(self, text, line=1, clear=False, fontSize=15):
         if clear==True:
@@ -180,7 +179,6 @@ class G19(object):
             draw.text((20, 200), self.__line7, font=tahoma20)
             
         del draw 
-        self.send_frame(self.convert_text_to_image(self.__im))
 
 
     def read_g_and_m_keys(self, maxLen=20):

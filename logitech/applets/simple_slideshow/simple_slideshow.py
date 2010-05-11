@@ -47,7 +47,7 @@ class SlideshowRun(Runnable):
             self.__lg19 = lg19
             self.__location = moviePath
             self.__arrFiles = []
-            self.__isStarted = False
+            self.__isStarted = True
 ##        if os.path.isdir(self.__location):
             try:
                 for f in os.listdir(self.__location):
@@ -90,15 +90,15 @@ class SlideshowRun(Runnable):
             self.update(self.__i)
         return True
 
-class Slideshow(object):
+class slideshow(object):
 
-    def __init__(self, lg19, moviePath):
+    def __init__(self, lg19):
         if not os.path.isdir(moviePath):
             print "\n! ! !  ERROR: Directory not found: "+moviePath+" ! ! !\n"
             
         else:
             self.__lg19 = lg19
-            self.__moviePath = moviePath
+            self.__moviePath = "logitech/applets/simple_slideshow/pics" 
             self.__slideshowrun = SlideshowRun(lg19,self.__moviePath)        
             self.__inputProcessor = SlideshowInputProcessor(self.__slideshowrun)
             self.start()
@@ -116,7 +116,7 @@ class Slideshow(object):
 
 if __name__ == '__main__':
     lg19 = G19()
-    slideshow = Slideshow(lg19)
+    slideshow = slideshow(lg19)
     slideshow.start()
     try:
         while True:

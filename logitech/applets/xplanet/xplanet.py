@@ -171,7 +171,7 @@ class XplanetInputProcessor(InputProcessor):
         return processed
 
 
-class Xplanet(object):
+class xplanet(object):
 
     def __init__(self, lg19):
         self.__dataStore = DataStore(lg19)

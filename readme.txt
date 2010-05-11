@@ -46,6 +46,9 @@ PySide (not yet)
 - press one or multiple M* keys and use the scrollwheel to adjust color
 - may crash with usberror!
 
+==== xplanet ====
+-takes a while to load, don't press OK till it's loaded (or go back to MENU to restart)
+
 
 === Infos for developers ===
 

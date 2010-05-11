@@ -32,6 +32,10 @@ PySide (not yet)
 
 - if anything goes wrong: sudo killall python (might kill some other processes)
 
+==== Special Keys ====
+- After starting, you can map the G-Keys like any other Multimedia-Key (in Gnome: Menu->System->Preferences-> Keyboard Shortcuts
+- The Standardkeys (Play, Mute, ...) should already be mapped, if not you can map them like the G-Keys
+
 ==== Slideshow ====
 
 - Put pictures to logitech/applets/simple_slideshow/pics/ (or change path in the simple_slideshow.py file)

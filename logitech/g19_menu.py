@@ -11,7 +11,9 @@ class G19Menu(object):
         self.__lg19 = lg19
         self.__applets = []
         self.__menuOnly = False
+        self.__firstItem = 1
         self.__selectedItem = 1
+        self.__selection = 1
         self.__inputProcessor = MenuInputProcessor(self)
         try:
             for f in os.listdir(self.__applet_dir):
@@ -27,10 +29,15 @@ class G19Menu(object):
     def changeSelection(self, direction):
         if direction == -1:
             if self.__selectedItem > 1:
-                self.__selectedItem = self.__selectedItem - 1
+                self.__selectedItem -= 1
+            if self.__selection > 0:
+                self.__selection += direction
+
         if direction == 1:
             if self.__selectedItem < len(self.__applets):
                  self.__selectedItem = self.__selectedItem + 1
+                 self.__selection += direction
+
         self.showMenu(self.__applets)
     
     def get_input_processor(self):
@@ -39,7 +46,7 @@ class G19Menu(object):
     def startSelected(self):
         g19 = self.__lg19        
         try:
-            applet = self.__applets[self.__selectedItem-1]
+            applet = self.__applets[self.__selection]
             call = applet.split("_")
             appletname = call[len(call)-1]
             exec 'from logitech.applets.' + applet + '.' + applet + ' import '+ appletname
@@ -61,14 +68,24 @@ class G19Menu(object):
         
     def showMenu(self, menuEntries):
         i = 1
-        j=1
+        if self.__selection+1 > self.__firstItem+6:
+            if self.__firstItem+6 < len(menuEntries):
+                self.__firstItem +=1
+            self.__selectedItem = 7
+        if self.__selection+1 < self.__firstItem:
+            self.__firstItem -=1
+            self.__selectedItem = 1
         self.__lg19.clear_text()
-        for f in menuEntries:
+        for j in range(self.__firstItem, self.__firstItem+7):
+            print str(j)
             if i == self.__selectedItem:
-                self.__lg19.load_text("-> "+f, i)
+                self.__lg19.load_text("-> "+menuEntries[j-1], i)
+                self.__selection = j-1
             else:
-                self.__lg19.load_text(f, i)
+                self.__lg19.load_text(menuEntries[j-1], i)
             i = i+1
+        print "-----"
+
         self.__lg19.set_text()
 
 class MenuInputProcessor(InputProcessor):

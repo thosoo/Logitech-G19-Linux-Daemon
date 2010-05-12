@@ -181,6 +181,7 @@ class xplanet(object):
         self.__isStarted = False
         self.__dataStore = DataStore(lg19)
         self.__lg19 = lg19
+        self.__firstStart = True
         self.__renderer = XplanetRenderer(lg19, self.__dataStore)
         self.__inputProcessor = XplanetInputProcessor(self)
         self.__lg19.load_text("      Xplanet",1,True)
@@ -192,8 +193,10 @@ class xplanet(object):
         return self.__inputProcessor      
 
     def start(self):
-        t = threading.Thread(target=self.__dataStore.update)
-        t.start()
+        if self.__firstStart:
+            self.__firstStart = False
+            t = threading.Thread(target=self.__dataStore.update)
+            t.start()
         t = threading.Thread(target=self.__renderer.run)
         self.__renderer.start()
         t.start()

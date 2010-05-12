@@ -294,6 +294,8 @@ class G19(object):
         try:
             self.__usbDevice.handleIf1.controlMsg(
                 rtype, 0x09, colorData, 0x307, 0x01, 10)
+        except:
+            pass
         finally:
             self.__usbDeviceMutex.release()
 

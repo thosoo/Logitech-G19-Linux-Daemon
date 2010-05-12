@@ -44,10 +44,11 @@ PySide (not yet)
 
 ==== Simple_gb_light ====
 - press one or multiple M* keys and use the scrollwheel to adjust color
-- may crash with usberror!
+- may crash with usberror! ***UPDATE should be fixed***
 
 ==== xplanet ====
--takes a while to load, don't press OK till it's loaded (or go back to MENU to restart)
+- takes a while to load, don't press OK till it's loaded (or go back to MENU to restart)
+- when it's loaded you can play/pause with ok
 
 
 === Infos for developers ===
@@ -61,7 +62,7 @@ PySide (not yet)
 ==== Key-Problems ====
 
 - Don't use the MENU-Key in your application, as it is used to terminate it.
-- If you use the G- or MultimediaKeys, more than 1 action may be triggered
+- If you use the G- or MultimediaKeys, more than 1 action may be triggered (They may be used as gnome-shortcuts, may get fixed eventualy)
 
 
 

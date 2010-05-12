@@ -6,6 +6,14 @@ your hamster, don't say I didn't warn you!
 
 This are my (sBlatt) additions to MultiCoreNOPs code, search für him @ gitHub if you want the original code
 
+*** Warning: this driver is not at all stable and I consider this a development branch! It *should* not break
+	     anything, but if it does, bad for you! I will upload a .deb beta Package as soon as i consider
+	     it rather stable and a .deb package with an autostart daemon as soon as I'm shure it realy doesn't
+	     crash! If you want to test it, I invite you to do so and send me bugs to sblatt2@gmail.com or
+	     on github (http://github.com/sblatt/Logitech-G19-Linux-Daemon).
+
+Now have fun with the Logitech G19 Linux Daemon
+
 
 === What you need to use this ===
 
@@ -31,6 +39,10 @@ PySide (not yet)
 - Press MENU to go back to the Menu (there is a chance the applet wil reapear on its own, just press MENU again)
 
 - if anything goes wrong: sudo killall python (might kill some other processes)
+
+==== some tips ====
+- If an applet crashes, most of the time it's possible to go back to the menu by pressing the MENU-Key (crashed app will be terminated)
+- Don't try any fancy stuff - Or please do so and send me the error log and a short summary of what you were doing
 
 ==== Special Keys ====
 - After starting, you can map the G-Keys like any other Multimedia-Key (in Gnome: Menu->System->Preferences-> Keyboard Shortcuts

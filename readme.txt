@@ -34,6 +34,7 @@ PySide (not yet)
 === How it works ===
 
 - The menu shows your installed applets. As of now (11.5.10) only the simple_slideshow and simple_clock-applets have been tested, the others might work
+***UPDATE*** All applets except the display brightness applet should work, maybe you have to change the fonts-path in g19.py if it can't find your fonts!
 - Navigate with your display-keys
 - Press OK to start an applet
 - Press MENU to go back to the Menu (there is a chance the applet wil reapear on its own, just press MENU again)

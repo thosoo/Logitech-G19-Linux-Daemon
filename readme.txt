@@ -21,7 +21,8 @@ Now have fun with the Logitech G19 Linux Daemon
 
 Python 2.6
 pyusb
-python-tk (as soon as config dialogs are implementet, I'm working on it right now)
+python-virtkey
+python-tk
 
 optional:
 PySide (not yet)

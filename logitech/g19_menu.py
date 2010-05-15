@@ -77,12 +77,13 @@ class G19Menu(object):
             self.__selectedItem = 1
         self.__lg19.clear_text()
         for j in range(self.__firstItem, self.__firstItem+7):
-            if i == self.__selectedItem:
-                self.__lg19.load_text("-> "+menuEntries[j-1], i)
-                self.__selection = j-1
-            else:
-                self.__lg19.load_text(menuEntries[j-1], i)
-            i = i+1
+            if j <= len(menuEntries):
+                if i == self.__selectedItem:
+                    self.__lg19.load_text("-> "+menuEntries[j-1], i)
+                    self.__selection = j-1
+                else:
+                    self.__lg19.load_text(menuEntries[j-1], i)
+                i = i+1
 
         self.__lg19.set_text()
 

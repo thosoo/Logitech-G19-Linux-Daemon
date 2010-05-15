@@ -6,6 +6,8 @@ your hamster, don't say I didn't warn you!
 
 This are my (sBlatt) additions to MultiCoreNOPs code, search für him @ gitHub if you want the original code
 
+check out the Video: http://www.youtube.com/watch?v=FE1nKPGBYuM
+
 *** Warning: this driver is not at all stable and I consider this a development branch! It *should* not break
 	     anything, but if it does, bad for you! I will upload a .deb beta Package as soon as i consider
 	     it rather stable and a .deb package with an autostart daemon as soon as I'm shure it realy doesn't

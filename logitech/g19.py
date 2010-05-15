@@ -166,7 +166,7 @@ class G19(object):
         if clear==True:
             self.clear_text()
 
-        fontPath = self.__g19config.read("fontPath", "/usr/share/fonts/truetype/Tahoma.TTF")
+        fontPath = self.__g19config.read("fontPath", "Verdana.ttf")
         if not os.path.isfile(fontPath):
             print "Font not found"
             

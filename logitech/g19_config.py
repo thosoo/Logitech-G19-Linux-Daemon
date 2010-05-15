@@ -13,12 +13,13 @@ class G19Config(object):
             fd = open(self.__configFile, "w")
             fd.close()
         self.__config.read(self.__configFile)
+        if not self.__config.has_section(self.__section):
+            self.__config.add_section(self.__section)
 
     
     def write(self, key, value):        
         
-        if not self.__config.has_section(self.__section):
-            self.__config.add_section(self.__section)
+
         self.__config.set(self.__section, key, value)
         
         

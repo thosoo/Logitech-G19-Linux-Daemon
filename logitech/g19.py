@@ -1,5 +1,6 @@
 from g19_receivers import G19Receiver
 from g19_mapper import G19Mapper
+from g19_config import G19Config
 
 import sys
 import threading
@@ -19,10 +20,12 @@ class G19(object):
     '''
 
     def __init__(self, resetOnStart=False):
+        self.__g19config = G19Config("Global")
         '''Initializes and opens the USB device.'''
         self.__usbDevice = G19UsbController(resetOnStart)
         self.__usbDeviceMutex = threading.Lock()
         self.__keyReceiver = G19Receiver(self)
+        self.__bgconf = G19Config("simple_bg_light")
         self.__threadDisplay = None
         self.__im = Img.new("RGB", (320, 240))
         self.__line1 = ""
@@ -34,6 +37,10 @@ class G19(object):
         self.__line7 = ""
         self.__mapper = G19Mapper(self)
         self.__keyReceiver.add_input_processor(self.__mapper.get_input_processor())
+        self.__curColor = [self.__bgconf.read("red", "255", "int"), self.__bgconf.read("green", "255", "int"), self.__bgconf.read("blue", "255", "int")]
+        self.set_bg_color(*self.__curColor)
+
+
 
     @staticmethod
     def convert_image_to_frame(filename):
@@ -159,7 +166,10 @@ class G19(object):
         if clear==True:
             self.clear_text()
 
-        fontPath = "/usr/share/fonts/truetype/Tahoma.TTF"
+        fontPath = self.__g19config.read("fontPath", "/usr/share/fonts/truetype/Tahoma.TTF")
+        if not os.path.isfile(fontPath):
+            print "Font not found"
+            
         self.__tahoma20  =  ImageFont.truetype ( fontPath, 20 )
         
         if line==1:

@@ -1,5 +1,7 @@
 from logitech.g19_keys import (Data, Key)
 from logitech.g19_receivers import InputProcessor
+from logitech.g19_config import G19Config
+
 
 class light(object):
     '''Simple color changing.
@@ -14,12 +16,16 @@ class light(object):
         self.__redEnabled = False
         self.__greenEnabled = False
         self.__blueEnabled = False
-        self.__curColor = [255, 255, 255]
+        self.__bgconf = G19Config("simple_bg_light")
+        self.__curColor = [self.__bgconf.read("red", "255", "int"), self.__bgconf.read("green", "255", "int"), self.__bgconf.read("blue", "255", "int")]
         self.__lg19.load_text("    simple_bg_light", 1, True)
-        self.__lg19.load_text("Red:   255", 3)
-        self.__lg19.load_text("Green: 255", 4)
-        self.__lg19.load_text("Blue:  255", 5)
+        self.__lg19.load_text("Red:   "+str(self.__curColor[0]), 3)
+        self.__lg19.load_text("Green: "+str(self.__curColor[1]), 4)
+        self.__lg19.load_text("Blue:  "+str(self.__curColor[2]), 5)
+        self.__lg19.load_text("Press SETTINGS to save", 7)
         self.__lg19.set_text()
+        self.__lg19.set_bg_color(*self.__curColor)
+
 
     def _clamp_current_color(self):
         '''Assures that all color components are in [0, 255].'''
@@ -48,6 +54,13 @@ class light(object):
 
     def process_input(self, evt):
         processed = False
+        
+        if Key.SETTINGS in evt.keysDown:
+            self.__bgconf.write("red", self.__curColor[0])
+            self.__bgconf.write("green", self.__curColor[1])
+            self.__bgconf.write("blue", self.__curColor[2])
+            
+            processed = True
         if Key.M1 in evt.keysDown:
             self.__redEnabled = not self.__redEnabled
             self._update_leds()
@@ -71,6 +84,7 @@ class light(object):
         if Key.SCROLL_DOWN in evt.keysDown:
             diffVal = -10
             scrollUsed = True
+        
 
         atLeastOneColorIsEnabled = False
 

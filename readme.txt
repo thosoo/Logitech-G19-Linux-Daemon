@@ -31,6 +31,7 @@ PySide (not yet)
 - start a terminal
 - cd to the folder
 - type sudo python main.py (usb needs root, change your permissions if you want to start this as a normal user)
+- if it can't finde your fonts change path in ~/.lg19/lg19.cfg
 
 === How it works ===
 
@@ -39,11 +40,13 @@ PySide (not yet)
 - Navigate with your display-keys
 - Press OK to start an applet
 - Press MENU to go back to the Menu (there is a chance the applet wil reapear on its own, just press MENU again)
+- some applets use the option key (see below)
 
 - if anything goes wrong: sudo killall python (might kill some other processes)
 
 ==== some tips ====
 - If an applet crashes, most of the time it's possible to go back to the menu by pressing the MENU-Key (crashed app will be terminated)
+- Ther will be created a config file @ ~/.lg19/lg19.cfg . check it out to check values manually
 - Don't try any fancy stuff - Or please do so and send me the error log and a short summary of what you were doing
 
 ==== Special Keys ====
@@ -52,13 +55,13 @@ PySide (not yet)
 
 ==== Slideshow ====
 
-- Put pictures to logitech/applets/simple_slideshow/pics/ (or change path in the simple_slideshow.py file)
+- Choose a folder if you start it for the first time
 - Press OK to start automated slideshow
 - Press UP/DOWN to change slideshow-delay (standard is 5sec, 1sec/step)
 
 ==== Simple_gb_light ====
 - press one or multiple M* keys and use the scrollwheel to adjust color
-- may crash with usberror! ***UPDATE should be fixed***
+- press SETTINGS to change images folder
 
 ==== xplanet ====
 - takes a while to load, don't press OK till it's loaded (or go back to MENU to restart)
@@ -79,6 +82,14 @@ PySide (not yet)
 - If you use the G- or MultimediaKeys, more than 1 action may be triggered (They may be used as gnome-shortcuts, may get fixed eventualy)
 
 
+=== Changelog ===
+
+Release 15.5.2010
+
+** Added config file (~/.lg19/lg19.cfg) to save some stuff (gets automatically created @ first run (for every applet individually)
+** Adapted some applets to use the config file
+** Added folder open dialog for simple_slideshow
+** Modified simple_timer to indicate selected item
 
 
 ------------------------ Original readmy by MultiCoreNOP--------------------------------------

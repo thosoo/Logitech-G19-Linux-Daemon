@@ -48,6 +48,7 @@ class TimerRun(Runnable):
         self.__lg19 = lg19
         self.__hours = 0
         self.__minutes = 0
+        self.__i = 3
         self.__seconds = 0
         self.__isRunning = False
         self.__timer = timer
@@ -69,21 +70,45 @@ class TimerRun(Runnable):
         else:
             self.__spaceS = ""
         if self.__isRunning:
-            print "isRunning"
             self.changeSeconds(-1)
             self.__time = "               "+self.__spaceH+str(self.__hours)+":"+self.__spaceM+str(self.__minutes)+":"+self.__spaceS+str(self.__seconds)
             self.__lg19.load_text(self.__time,4)
             self.__lg19.set_text()
             time.sleep(1)
         else:
-            print "notRunning"   
-            self.__time = "               "+self.__spaceH+str(self.__hours)+":"+self.__spaceM+str(self.__minutes)+":"+self.__spaceS+str(self.__seconds)
+            if self.__selection == 1:
+                
+                if self.__i > 3:
+                    
+                    self.__time = "                  :"+self.__spaceM+str(self.__minutes)+":"+self.__spaceS+str(self.__seconds)
+                    self.__i = 0
+                else:
+                    
+                    self.__time = "               "+self.__spaceH+str(self.__hours)+":"+self.__spaceM+str(self.__minutes)+":"+self.__spaceS+str(self.__seconds)
+                    self.__i += 1
+            if self.__selection == 2:
+                
+                if self.__i > 3:
+                
+                    self.__time = "               "+self.__spaceH+str(self.__hours)+":   :"+self.__spaceS+str(self.__seconds)
+                    self.__i = 0
+                else:
+                    
+                    self.__time = "               "+self.__spaceH+str(self.__hours)+":"+self.__spaceM+str(self.__minutes)+":"+self.__spaceS+str(self.__seconds)
+                    self.__i += 1
+            if self.__selection == 3:
+                if self.__i > 3:
+                    self.__time = "               "+self.__spaceH+str(self.__hours)+":"+self.__spaceM+str(self.__minutes)+":  "
+                    self.__i = 0
+                else:
+                    self.__time = "               "+self.__spaceH+str(self.__hours)+":"+self.__spaceM+str(self.__minutes)+":"+self.__spaceS+str(self.__seconds)
+                    self.__i += 1
             self.__lg19.load_text(self.__time,4)
             self.__lg19.set_text()
-            time.sleep(0.3)
+            time.sleep(0.1)
     
     def changeSelected(self, direction):
-        print "changeSelected"
+        self.__i = 5
         if self.__selection == 1:
             self.changeHours(direction)
         if self.__selection == 2:
@@ -92,11 +117,9 @@ class TimerRun(Runnable):
             self.changeSeconds(direction)
 
     def set_isRunning(self, isRunning):
-        print "setisrunning"
         self.__isRunning = isRunning
     
     def get_isRunning(self):
-        print "getisrunning"
         return self.__isRunning
         
     def changeHours(self, direction):
@@ -149,6 +172,7 @@ class TimerRun(Runnable):
                 self.__seconds += direction
     
     def changeSelection(self, direction):
+        self.__i = 5
         if self.__selection == 3 and direction == 1:
             self.__selection = 1
         elif self.__selection == 1 and direction == -1:

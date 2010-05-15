@@ -2,11 +2,13 @@ from logitech.g19 import *
 from logitech.g19_keys import Key
 from logitech.g19_receivers import *
 from logitech.runnable import Runnable
+from logitech.g19_config import G19Config
 
 import multiprocessing
 import os
 import threading
 import time
+import Tkinter, tkFileDialog
 
 class SlideshowInputProcessor(InputProcessor):
     '''Map the keys to the functions'''
@@ -44,33 +46,65 @@ class SlideshowInputProcessor(InputProcessor):
                 print "File not found -"
                 
         if Key.OK in inputEvent.keysDown:
-            processed = True
             self.__slideshowrun.switchIsStarted()
+            processed = True
+
+            
+        if Key.SETTINGS in inputEvent.keysDown:
+            self.__slideshowrun.optionsMenu()
+            processed = True
+
             
         return processed
 
 class SlideshowRun(Runnable):
     '''Lists Files in the given Directory and shows them on the screen'''
-    def __init__(self, lg19, moviePath):
-        if not os.path.isdir(moviePath):
-            print "ERROR: Directory not found: "+moviePath
-        else:
-            Runnable.__init__(self)
-            self.__delay = 5
-            self.__i = 1
-            self.__lg19 = lg19
-            self.__location = moviePath
-            self.__arrFiles = []
-            self.__isStarted = True
-            try:
-                for f in os.listdir(self.__location):
-                    if os.path.isfile(os.path.join(self.__location, f)):
+    def __init__(self, lg19):
+        Runnable.__init__(self)
+        self.__ssconf = G19Config("simple_slideshow")
+        self.__isStarted = True
+        self.__wasStarted = True
+        self.__delay = self.__ssconf.read("delay", "10", "float")
+        self.__i = -1
+        self.__lg19 = lg19
+        self.__arrFiles = []
+        self.__location = self.__ssconf.read("imagePath")
+        if not os.path.isdir(self.__location):
+            self.__isStarted = False
+            self.__lg19.load_text("      No pictures loaded",1,True)
+            self.__lg19.load_text("Press option to choose folder",2)
+            self.__lg19.set_text()
+            self.optionsMenu() 
+        self.createList()
+
+    def optionsMenu(self):
+        root = Tkinter.Tk()
+        tmp = tkFileDialog.askdirectory(parent=root,initialdir=os.path.expanduser('~/'),title='Select Images Directory')
+        if not tmp == "":
+            self.__location = tmp            
+        root.destroy()
+        self.__ssconf.write("imagePath",self.__location)
+        self.createList()
+
+    def createList(self):
+        self.__arrFiles = []
+        self.__i = -1
+        if not self.__location == "":
+            for f in os.listdir(self.__location):
+                if os.path.isfile(os.path.join(self.__location, f)):
+                    (rubbish, type) = os.path.splitext(f)
+                    if type == ".jpg" or type == ".jpeg" or type == ".png" or type == ".gif":
                         self.__arrFiles.append(f)
                         self.__i = self.__i+1
-            except:
-                print "IO Exception"
-            self.update(0)
-        Runnable.__init__(self)
+        if self.__i < 0:
+            self.__isStarted = False
+            self.__lg19.load_text("      No pictures loaded",1,True)
+            self.__lg19.load_text("Press option to choose folder",2)
+            self.__lg19.set_text()
+        else:
+            self.__isStarted = self.__wasStarted
+            self.changeI("f")
+
 
     def changeDelay(self, direction):
         if self.__delay >1:
@@ -85,6 +119,7 @@ class SlideshowRun(Runnable):
     
     def switchIsStarted(self):
         self.__isStarted = not self.__isStarted
+        self.__wasStarted = self.__isStarted
 
     def update(self, i):
         try:
@@ -109,15 +144,10 @@ class SlideshowRun(Runnable):
 class slideshow(object):
 
     def __init__(self, lg19):
-        self.__moviePath = "logitech/applets/simple_slideshow/pics" 
-        if not os.path.isdir(self.__moviePath):
-            print "\n! ! !  ERROR: Directory not found: "+moviePath+" ! ! !\n"
-            
-        else:
-            self.__lg19 = lg19
-            self.__slideshowrun = SlideshowRun(lg19,self.__moviePath)        
-            self.__inputProcessor = SlideshowInputProcessor(self.__slideshowrun)
-            self.start()
+        self.__lg19 = lg19
+        self.__slideshowrun = SlideshowRun(lg19)        
+        self.__inputProcessor = SlideshowInputProcessor(self.__slideshowrun)
+        self.start()
         
     def get_input_processor(self):
         return self.__inputProcessor
@@ -126,6 +156,7 @@ class slideshow(object):
         t = threading.Thread(target=self.__slideshowrun.run)
         t.start()
     
+
     def stop(self):
         self.__slideshowrun.stop()
 

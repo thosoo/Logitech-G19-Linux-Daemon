@@ -126,19 +126,21 @@ class SlideshowRun(Runnable):
             self.__lg19.load_image(os.path.join(self.__location, self.__arrFiles[i]))
         except IOError:            
             print "File "+ os.path.join(self.__location, self.__arrFiles[i])+" not found"
+            
     def changeI(self, direction):
-        if direction == "f":
-            if self.__i < len(self.__arrFiles)-1:
-                self.__i = self.__i+1
-            else:
-                self.__i = 0
-            self.update(self.__i)
-        if direction == "r":
-            if self.__i == 0:
-                self.__i = len(self.__arrFiles)-1
-            else:
-                self.__i = self.__i-1
-            self.update(self.__i)
+        if len(self.__arrFiles) != 0:
+            if direction == "f":
+                if self.__i < len(self.__arrFiles)-1:
+                    self.__i = self.__i+1
+                else:
+                    self.__i = 0
+                self.update(self.__i)
+            if direction == "r":
+                if self.__i == 0:
+                    self.__i = len(self.__arrFiles)-1
+                else:
+                    self.__i = self.__i-1
+                self.update(self.__i)
         return True
 
 class slideshow(object):

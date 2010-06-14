@@ -178,32 +178,44 @@ class XplanetInputProcessor(InputProcessor):
 class xplanet(object):
 
     def __init__(self, lg19):
-        self.__isStarted = False
-        self.__dataStore = DataStore(lg19)
-        self.__lg19 = lg19
-        self.__firstStart = True
-        self.__renderer = XplanetRenderer(lg19, self.__dataStore)
         self.__inputProcessor = XplanetInputProcessor(self)
-        self.__lg19.load_text("      Xplanet",1,True)
-        self.__lg19.load_text("Press OK to start rendering",3)
-        self.__lg19.set_text()
-        
+
+        if os.path.exists("/usr/bin/xplanet"):
+            self.__isStarted = False
+            self.__dataStore = DataStore(lg19)
+            self.__lg19 = lg19
+            self.__firstStart = True
+            self.__renderer = XplanetRenderer(lg19, self.__dataStore)
+            self.__lg19.load_text("      Xplanet",1,True)
+            self.__lg19.load_text("Press OK to start rendering",3)
+            self.__lg19.set_text()
+        else:
+            self.__lg19 = lg19
+            self.__lg19.load_text("      Xplanet",1,True)
+            self.__lg19.load_text("xplanet not installed",3)
+            self.__lg19.load_text("install xplanet first!",4)
+
+            self.__lg19.set_text()
+
 
     def get_input_processor(self):
         return self.__inputProcessor      
 
     def start(self):
-        if self.__firstStart:
-            self.__firstStart = False
-            t = threading.Thread(target=self.__dataStore.update)
+        if os.path.exists("/usr/bin/xplanet"):
+            if self.__firstStart:
+                self.__firstStart = False
+                t = threading.Thread(target=self.__dataStore.update)
+                t.start()
+            t = threading.Thread(target=self.__renderer.run)
+            self.__renderer.start()
             t.start()
-        t = threading.Thread(target=self.__renderer.run)
-        self.__renderer.start()
-        t.start()
+        
 
     def stop(self):
-        self.__renderer.stop()
-        self.__dataStore.abort_update()
+        if os.path.exists("/usr/bin/xplanet"):
+            self.__renderer.stop()
+            self.__dataStore.abort_update()
 
 
 if __name__ == '__main__':

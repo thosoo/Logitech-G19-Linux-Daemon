@@ -1,3 +1,14 @@
+************IMPORTANT******************
+
+I stoped working on this project as I'm now involved in an even better project for the Logitech G19:
+
+http://g19linux.sourceforge.net/
+
+If you want to continue this deamon, feel free to do so, or just join us at sourceforge!
+
+***************************************
+
+
 === Logitech G19 Linux support ===
 
 This is work in progress and considered absolutely alpha.  It SHOULD work, but no

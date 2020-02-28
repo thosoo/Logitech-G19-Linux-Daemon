@@ -27,6 +27,42 @@ check out the Video: http://www.youtube.com/watch?v=dJN4_Ny7QkU
 
 Now have fun with the Logitech G19 Linux Daemon
 
+Still broken:
+Traceback (most recent call last):
+  File "main.py", line 8, in <module>
+    lg19 = G19(True)
+  File "/home/thaison/Logitech-G19-Linux-Daemon/logitech/g19.py", line 26, in __init__
+    self.__usbDevice = G19UsbController(resetOnStart)
+  File "/home/thaison/Logitech-G19-Linux-Daemon/logitech/g19.py", line 414, in __init__
+    self.handleIf0.reset()
+  File "/usr/lib/python3.7/site-packages/usb/legacy.py", line 241, in reset
+    self.dev.reset()
+  File "/usr/lib/python3.7/site-packages/usb/core.py", line 913, in reset
+    self._ctx.managed_open()
+  File "/usr/lib/python3.7/site-packages/usb/core.py", line 102, in wrapper
+    return f(self, *args, **kwargs)
+  File "/usr/lib/python3.7/site-packages/usb/core.py", line 120, in managed_open
+    self.handle = self.backend.open_device(self.dev)
+  File "/usr/lib/python3.7/site-packages/usb/backend/libusb1.py", line 786, in open_device
+    return _DeviceHandle(dev)
+  File "/usr/lib/python3.7/site-packages/usb/backend/libusb1.py", line 643, in __init__
+    _check(_lib.libusb_open(self.devid, byref(self.handle)))
+  File "/usr/lib/python3.7/site-packages/usb/backend/libusb1.py", line 595, in _check
+    raise USBError(_strerror(ret), ret, _libusb_errno[ret])
+usb.core.USBError: [Errno 13] Access denied (insufficient permissions)
+
+
+
+Traceback (most recent call last):
+  File "main.py", line 8, in <module>
+    lg19 = G19(True)
+  File "/home/thaison/Logitech-G19-Linux-Daemon/logitech/g19.py", line 26, in __init__
+    self.__usbDevice = G19UsbController(resetOnStart)
+  File "/home/thaison/Logitech-G19-Linux-Daemon/logitech/g19.py", line 421, in __init__
+    iface1 = config.interfaces[1][0]
+IndexError: list index out of range
+
+
 
 === What you need to use this ===
 

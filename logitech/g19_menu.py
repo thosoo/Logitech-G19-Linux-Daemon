@@ -1,7 +1,7 @@
-from g19_receivers import G19Receiver
-from logitech.g19 import *
-from logitech.g19_keys import Key
-from logitech.g19_receivers import *
+from .g19_receivers import G19Receiver
+from .g19 import *
+from .g19_keys import Key
+from .g19_receivers import *
 
 import os
 
@@ -20,7 +20,7 @@ class G19Menu(object):
                 if os.path.isdir(os.path.join(self.__applet_dir, f)):
                     self.__applets.append(f)
         except:
-            print "IO Exception"
+            print("IO Exception")
         self.showMenu(self.__applets)
     
     def getMenuOnly(self):
@@ -49,8 +49,8 @@ class G19Menu(object):
             applet = self.__applets[self.__selection]
             call = applet.split("_")
             appletname = call[len(call)-1]
-            exec 'from logitech.applets.' + applet + '.' + applet + ' import '+ appletname
-            exec 'selectedApplet ='+ appletname+'(g19)'
+            exec('from logitech.applets.' + applet + '.' + applet + ' import '+ appletname)
+            exec('selectedApplet ='+ appletname+'(g19)')
             self.__menuOnly = True
             g19.add_applet(selectedApplet)
             self.__selectedApplet = selectedApplet

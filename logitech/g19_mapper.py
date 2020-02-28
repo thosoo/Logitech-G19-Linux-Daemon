@@ -1,7 +1,7 @@
-from g19_receivers import G19Receiver
-from logitech.g19 import *
-from logitech.g19_keys import Key
-from logitech.g19_receivers import *
+from .g19_receivers import G19Receiver
+from .g19 import *
+from .g19_keys import Key
+from .g19_receivers import *
 
 import virtkey
 

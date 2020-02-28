@@ -1,5 +1,5 @@
-from g19_keys import (Data, Key)
-from runnable import Runnable
+from .g19_keys import (Data, Key)
+from .runnable import Runnable
 
 import threading
 import time
@@ -248,7 +248,7 @@ class G19Receiver(Runnable):
                     if proc.process_input(evt):
                         break
             else:
-                print "mm ignored: ", data
+                print("mm ignored: ", data)
             gotData = True
 
         data = self.__g19.read_g_and_m_keys()
@@ -259,7 +259,7 @@ class G19Receiver(Runnable):
                     if proc.process_input(evt):
                         break
             else:
-                print "m/g ignored: ", data
+                print("m/g ignored: ", data)
             gotData = True
 
         data = self.__g19.read_display_menu_keys()
@@ -270,7 +270,7 @@ class G19Receiver(Runnable):
                     if proc.process_input(evt):
                         break
             else:
-                print "dis ignored: ", data
+                print("dis ignored: ", data)
             gotData = True
 
         if not gotData:

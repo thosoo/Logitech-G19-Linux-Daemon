@@ -1,4 +1,4 @@
-import ConfigParser
+import configparser
 import os
 
 class G19Config(object):
@@ -6,7 +6,7 @@ class G19Config(object):
     def __init__(self, section):
         self.__configFile = os.path.expanduser('~/.lg19/lg19.cfg')
         self.__section = section
-        self.__config = ConfigParser.RawConfigParser()
+        self.__config = configparser.RawConfigParser()
         if not os.path.isdir(os.path.expanduser('~/.lg19/')):
             os.mkdir(os.path.expanduser('~/.lg19/'))
         if not os.path.isfile(self.__configFile):

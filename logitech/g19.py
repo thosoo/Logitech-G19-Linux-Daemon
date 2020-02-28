@@ -1,6 +1,6 @@
-from g19_receivers import G19Receiver
-from g19_mapper import G19Mapper
-from g19_config import G19Config
+from .g19_receivers import G19Receiver
+from .g19_mapper import G19Mapper
+from .g19_config import G19Config
 
 import sys
 import threading
@@ -8,8 +8,9 @@ import time
 import usb
 import PIL.Image as Img
 import os
-import ImageFont
-import Image, ImageDraw
+from PIL import ImageFont
+import image
+from PIL import ImageDraw
 
 
 class G19(object):
@@ -168,7 +169,7 @@ class G19(object):
 
         fontPath = self.__g19config.read("fontPath", "Verdana.ttf")
         if not os.path.isfile(fontPath):
-            print "Font not found"
+            print("Font not found")
             
         self.__tahoma20  =  ImageFont.truetype ( fontPath, 20 )
         

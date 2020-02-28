@@ -30,10 +30,14 @@ Now have fun with the Logitech G19 Linux Daemon
 
 === What you need to use this ===
 
-Python 2.6
+Python 3
 pyusb
 python-virtkey
 python-tk
+tkinter
+
+pip install pillow
+pip install image --user
 
 optional:
 PySide (not yet)

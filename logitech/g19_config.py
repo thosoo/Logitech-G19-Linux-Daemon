@@ -23,7 +23,7 @@ class G19Config(object):
         self.__config.set(self.__section, key, value)
         
         
-        self.__config.write(open(self.__configFile, "wb"))
+        self.__config.write(open(self.__configFile, "w"))
     
     def read(self, key, default="", type="string"):
         '''Returns the config value of key.

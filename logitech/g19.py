@@ -6,10 +6,10 @@ import sys
 import threading
 import time
 import usb
-import PIL.Image as Img
+from PIL import Image as Img
 import os
 from PIL import ImageFont
-import image
+from PIL import Image as image
 from PIL import ImageDraw
 
 
@@ -100,9 +100,9 @@ class G19(object):
         @return 16bit highcolor value in little-endian.
 
         '''
-        rBits = r * 2**5 / 255
-        gBits = g * 2**6 / 255
-        bBits = b * 2**5 / 255
+        rBits = r * 2**5 // 255
+        gBits = g * 2**6 // 255
+        bBits = b * 2**5 // 255
 
         rBits = rBits if rBits <= 0b00011111 else 0b00011111
         gBits = gBits if gBits <= 0b00111111 else 0b00111111
@@ -288,12 +288,13 @@ class G19(object):
             frame.append(i)
         for i in range(256):
             frame.append(i)
-
+        
         frame += data
+
 
         self.__usbDeviceMutex.acquire()
         try:
-            self.__usbDevice.handleIf0.bulkWrite(2, frame, 1000)
+            self.__usbDevice.handleIf0.bulkWrite(2, frame, 1000) 
         finally:
             self.__usbDeviceMutex.release()
 
@@ -418,7 +419,7 @@ class G19UsbController(object):
         self.handleIfMM = self.__kbd_device.open()
         config = self.__lcd_device.configurations[0]
         iface0 = config.interfaces[0][0]
-        iface1 = config.interfaces[1][0]
+        iface1 = config.interfaces[0][1]
 
         try:
             self.handleIfMM.setConfiguration(1)
